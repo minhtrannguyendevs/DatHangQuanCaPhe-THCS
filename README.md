@@ -7,8 +7,8 @@
 
 ### Technology
 * Java (JDK 17+)
-* Java Swing
-* Lưu trữ: File I/O (`data/menu.txt`, `data/orders.txt`)
+* Java Swing (Kéo thả trong netbeans)
+* Lưu trữ: File I/O (`data/menu.txt`, `data/orders.txt`,`users.txt`)
 
 ### Quick start
 1. Clone repo:
