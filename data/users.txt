@@ -1,0 +1,2 @@
+admin,123,Quan Ly,QUANLY
+nv01,123,Nguyen Van A,NHANVIEN
