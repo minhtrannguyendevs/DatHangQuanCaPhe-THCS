@@ -14,3 +14,5 @@
 1. Clone repo:
    ```bash
    git clone [https://github.com/minhtrannguyendevs/DatHangQuanCaPhe-THCS.git](https://github.com/minhtrannguyendevs/DatHangQuanCaPhe-THCS.git)
+2. Run project:
+   (`main.java`)
