@@ -1,4 +1,4 @@
-CF01,Ca phe den,25000,Do uong
-CF02,Ca phe sua,30000,Do uong
-TR01,Tra dao,35000,Do uong
-BA01,Banh ngot,30000,Do an
+CF01;Ca phe den;25000;Do uong
+CF02;Ca phe sua;30000;Do uong
+TR01;Tra dao;35000;Do uong
+BA01;Banh ngot;30000;Do an

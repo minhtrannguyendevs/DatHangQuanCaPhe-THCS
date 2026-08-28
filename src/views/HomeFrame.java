@@ -4,9 +4,15 @@
  */
 package views;
 
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import models.Mon;
+import utils.FileIO;
+
 /**
  *
- * @author WBPC
+ * @author MinhTranNguyen
  */
 public class HomeFrame extends javax.swing.JFrame {
     
@@ -18,14 +24,17 @@ public class HomeFrame extends javax.swing.JFrame {
     public HomeFrame() {
         initComponents();
         setLocationRelativeTo(null); 
-        
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        loadData(); // Đọc dữ liệu từ file qua FileIO
+    }
+
+    private void loadData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{"CF01", "Cà phê đen", "25,000", "Đồ uống"});
-        model.addRow(new Object[]{"CF02", "Cà phê sữa", "30,000", "Đồ uống"});
-        model.addRow(new Object[]{"TR01", "Trà đào cam sả", "35,000", "Đồ uống"});
-        model.addRow(new Object[]{"BA01", "Bánh phô mai", "30,000", "Đồ ăn"});
-        model.addRow(new Object[]{"BA02", "Bánh sừng bò", "20,000", "Đồ ăn"});
+        
+        List<Mon> list = FileIO.readMenu();
+        for (Mon m : list) {
+            model.addRow(new Object[]{m.ma, m.ten, m.gia, m.loai});
+        }
     }
 
     /**
@@ -75,7 +84,7 @@ public class HomeFrame extends javax.swing.JFrame {
 
         jButton1.setText("Xem chi tiết món");
 
-        jButton3.setText("Màn đặt hàng");
+        jButton3.setText("Đặt hàng");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -83,25 +92,27 @@ public class HomeFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(363, 363, 363)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabel2)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton3)))
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel2)
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2))
+                            .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jButton3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(459, 459, 459)
+                        .addComponent(jLabel1)))
                 .addGap(0, 34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,10 +121,11 @@ public class HomeFrame extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,7 +144,17 @@ public class HomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        String tuKhoa = jTextField1.getText().trim().toLowerCase();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        List<Mon> list = FileIO.readMenu();
+
+        for (Mon m : list) {
+            if (tuKhoa.isEmpty() || m.ten.toLowerCase().contains(tuKhoa)) {
+                model.addRow(new Object[]{m.ma, m.ten, m.gia, m.loai});
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
