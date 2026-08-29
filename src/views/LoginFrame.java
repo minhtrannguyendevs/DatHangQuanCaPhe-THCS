@@ -2,7 +2,8 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-
+import models.Account;
+import utils.FileIO;
 public class LoginFrame extends JFrame {
 
     private JTextField txtTenDangNhap;
@@ -66,6 +67,21 @@ public class LoginFrame extends JFrame {
 
         btnThoat.addActionListener(e -> System.exit(0));
         btnDangNhap.addActionListener(e -> {
+            // Lấy username và password từ ô nhập
+            String u = txtTenDangNhap.getText().trim();
+            String p = new String(txtMatKhau.getPassword()).trim();
+
+            // Duyệt danh sách tài khoản đọc từ file
+            for (models.Account acc : utils.FileIO.readUsers()) {
+                // Khớp tài khoản -> mở HomeFrame và đóng LoginFrame
+                if (acc.username.equals(u) && acc.password.equals(p)) {
+                    new HomeFrame().setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
+            // Không khớp tài khoản nào -> báo lỗi
+            lblThongBao.setText("Sai tài khoản hoặc mật khẩu!");
         });
 
         add(panelChinh);
