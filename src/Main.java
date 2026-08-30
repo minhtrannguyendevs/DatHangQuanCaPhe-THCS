@@ -1,6 +1,6 @@
 // import javax.swing.SwingUtilities;
 // import models.Account;
-// import views.HomeFrame; // Đổi từ views.home.HomeFrame thành views.HomeFrame
+// import views.HomeFrame; 
 
 // public class Main {
 //     public static void main(String[] args) {
@@ -10,6 +10,7 @@
 //         });
 //     }
 // }
+
 import javax.swing.SwingUtilities;
 import views.LoginFrame;
 // Đăng nhập từ trang login (Ok thì sẽ vào home)
