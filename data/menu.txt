@@ -1,4 +1,10 @@
-CF01;Ca phe den;25000;Do uong
-CF02;Ca phe sua;30000;Do uong
-TR01;Tra dao;35000;Do uong
-BA01;Banh ngot;30000;Do an
+CF03;Bac siu;32000;Do uong
+CF04;Espresso;30000;Do uong
+TR02;Tra sua tran chau;35000;Do uong
+TR03;Tra vai hat chia;35000;Do uong
+TR04;Tra chanh sa;25000;Do uong
+ST01;Sinh to bo;40000;Do uong
+ST02;Sinh to xoai;35000;Do uong
+BA02;Banh mi que;20000;Do an
+BA03;Croissant bo;28000;Do an
+AN01;Huong duong;15000;Do an
