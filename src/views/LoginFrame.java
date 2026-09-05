@@ -1,4 +1,4 @@
-﻿package views;
+package views;
 
 import models.Account;
 import utils.FileIO;
@@ -71,7 +71,7 @@ public class LoginFrame extends JFrame {
         // Sự kiện nút Thoát
         btnThoat.addActionListener(e -> System.exit(0));
 
-        // Sự kiện nút Đăng nhập kết nối với FileIO trong utils
+        // Sự kiện nút Đăng nhập kết nối với FileIO trong package utils
         btnDangNhap.addActionListener(e -> xuLyDangNhap());
 
         // Cho phép nhấn Enter tại ô mật khẩu để đăng nhập nhanh
@@ -84,7 +84,7 @@ public class LoginFrame extends JFrame {
         String tenDangNhap = txtTenDangNhap.getText().trim();
         String matKhau = new String(txtMatKhau.getPassword()).trim();
 
-        // 1. Kiểm tra trường rỗng
+        // 1. Kiểm tra không được để trống
         if (tenDangNhap.isEmpty() || matKhau.isEmpty()) {
             lblThongBao.setForeground(Color.RED);
             lblThongBao.setText("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
@@ -123,7 +123,7 @@ public class LoginFrame extends JFrame {
             try {
                 new HomeFrame().setVisible(true);
             } catch (Exception ex) {
-                // Mở HomeFrame nếu có
+                // Tự động mở màn hình HomeFrame
             }
         } else {
             lblThongBao.setForeground(Color.RED);
