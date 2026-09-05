@@ -1,12 +1,10 @@
 package views;
 
-import models.Account;
-import utils.FileIO;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-
+// import models.Account;
+// import utils.FileIO;
 public class LoginFrame extends JFrame {
 
     private JTextField txtTenDangNhap;
@@ -68,67 +66,26 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
         panelChinh.add(panelNut, gbc);
 
-        // Sự kiện nút Thoát
         btnThoat.addActionListener(e -> System.exit(0));
+        btnDangNhap.addActionListener(e -> {
+            // // Lấy username và password từ ô nhập
+            // String u = txtTenDangNhap.getText().trim();
+            // String p = new String(txtMatKhau.getPassword()).trim();
 
-        // Sự kiện nút Đăng nhập kết nối với FileIO trong package utils
-        btnDangNhap.addActionListener(e -> xuLyDangNhap());
-
-        // Cho phép nhấn Enter tại ô mật khẩu để đăng nhập nhanh
-        txtMatKhau.addActionListener(e -> xuLyDangNhap());
+            // // Duyệt danh sách tài khoản đọc từ file
+            // for (models.Account acc : utils.FileIO.readUsers()) {
+            //     // Khớp tài khoản -> mở HomeFrame và đóng LoginFrame
+            //     if (acc.username.equals(u) && acc.password.equals(p)) {
+            //         new HomeFrame().setVisible(true);
+            //         this.dispose();
+            //         return;
+            //     }
+            // }
+            // // Không khớp tài khoản nào -> báo lỗi
+            // lblThongBao.setText("Sai tài khoản hoặc mật khẩu!");
+        });
 
         add(panelChinh);
-    }
-
-    private void xuLyDangNhap() {
-        String tenDangNhap = txtTenDangNhap.getText().trim();
-        String matKhau = new String(txtMatKhau.getPassword()).trim();
-
-        // 1. Kiểm tra không được để trống
-        if (tenDangNhap.isEmpty() || matKhau.isEmpty()) {
-            lblThongBao.setForeground(Color.RED);
-            lblThongBao.setText("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
-            return;
-        }
-
-        // 2. Đọc danh sách tài khoản từ file data/users.txt thông qua FileIO
-        List<Account> danhSachAccount = FileIO.readUsers();
-        Account loggedInAccount = null;
-
-        if (danhSachAccount != null) {
-            for (Account acc : danhSachAccount) {
-                if (acc != null && acc.username != null && acc.password != null) {
-                    if (acc.username.equals(tenDangNhap) && acc.password.equals(matKhau)) {
-                        loggedInAccount = acc;
-                        break;
-                    }
-                }
-            }
-        }
-
-        // 3. Kiểm tra kết quả xác thực
-        if (loggedInAccount != null) {
-            lblThongBao.setForeground(new Color(0, 128, 0));
-            lblThongBao.setText("Đăng nhập thành công!");
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Đăng nhập thành công!\nXin chào " + loggedInAccount.fullName + " (" + loggedInAccount.role + ")",
-                    "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-
-            // Đóng cửa sổ Login sau khi đăng nhập thành công
-            this.dispose();
-            try {
-                new HomeFrame().setVisible(true);
-            } catch (Exception ex) {
-                // Tự động mở màn hình HomeFrame
-            }
-        } else {
-            lblThongBao.setForeground(Color.RED);
-            lblThongBao.setText("Tên đăng nhập hoặc mật khẩu không chính xác!");
-        }
     }
 
     public static void main(String[] args) {
