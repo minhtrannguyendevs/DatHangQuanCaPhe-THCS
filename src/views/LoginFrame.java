@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+
 // import models.Account;
 // import utils.FileIO;
 public class LoginFrame extends JFrame {
@@ -34,27 +35,35 @@ public class LoginFrame extends JFrame {
 
         JLabel lblTieuDe = new JLabel("ĐĂNG NHẬP HỆ THỐNG", SwingConstants.CENTER);
         lblTieuDe.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
         panelChinh.add(lblTieuDe, gbc);
 
         gbc.gridwidth = 1;
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         panelChinh.add(new JLabel("Tên đăng nhập:"), gbc);
 
         txtTenDangNhap = new JTextField(18);
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         panelChinh.add(txtTenDangNhap, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         panelChinh.add(new JLabel("Mật khẩu:"), gbc);
 
         txtMatKhau = new JPasswordField(18);
-        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         panelChinh.add(txtMatKhau, gbc);
 
         lblThongBao = new JLabel(" ", SwingConstants.CENTER);
         lblThongBao.setForeground(Color.RED);
-        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
         panelChinh.add(lblThongBao, gbc);
 
         JPanel panelNut = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
@@ -63,7 +72,9 @@ public class LoginFrame extends JFrame {
         panelNut.add(btnDangNhap);
         panelNut.add(btnThoat);
 
-        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
         panelChinh.add(panelNut, gbc);
 
         btnThoat.addActionListener(e -> System.exit(0));
