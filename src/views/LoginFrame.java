@@ -87,7 +87,7 @@ public class LoginFrame extends JFrame {
             for (Account acc : FileIO.readUsers()) {
                 // Khớp tài khoản -> mở HomeFrame và đóng LoginFrame
                 if (acc.username.equals(u) && acc.password.equals(p)) {
-                    new HomeFrame().setVisible(true);
+                    new HomeFrame(acc).setVisible(true);
                     this.dispose();
                     return;
                 }
