@@ -1,5 +1,7 @@
 {
     "code-runner.executorMap": {
-        "java": "cd $dir && javac -encoding UTF-8 $fileName && java -Dfile.encoding=UTF-8 $fileNameWithoutExt"
+        "java": "cd $dir && javac -encoding UTF-8 $fileName && java -Dfile.encoding=UTF-8 $fileNameWithoutExt",
+        "java.project.outputPath": "bin",
+        "java.project.sourcePaths": ["src"]
     }
 }
