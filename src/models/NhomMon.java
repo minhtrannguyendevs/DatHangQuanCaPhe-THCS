@@ -8,13 +8,13 @@ package models;
  * một dòng ở đây, giao diện tự chạy đúng.
  */
 public enum NhomMon {
-    //                          cà phê  đường   đá     sữa    size  topping
-    CAPHE("Cà phê",             true,   true,  true,  true,  true,  false),
-    TRASUA("Trà sữa",           false,  true,  true,  true,  true,  true),
-    TRA("Trà",                  false,  true,  true,  false, true,  true),
-    SINHTO("Sinh tố",           false,  true,  true,  true,  true,  false),
-    BANH("Bánh",                false,  false, false, false, false, false),
-    ANVAT("Ăn vặt",             false,  false, false, false, false, false);
+    // cà phê đường đá sữa size topping
+    CAPHE("Cà phê", true, true, true, true, true, false),
+    TRASUA("Trà sữa", false, true, true, true, true, true),
+    TRA("Trà", false, true, true, false, true, true),
+    SINHTO("Sinh tố", false, true, true, true, true, false),
+    BANH("Bánh", false, false, false, false, false, false),
+    ANVAT("Ăn vặt", false, false, false, false, false, false);
 
     public final String nhan;
     public final boolean chinhCaPhe;

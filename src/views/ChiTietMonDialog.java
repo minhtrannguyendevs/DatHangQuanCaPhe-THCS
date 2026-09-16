@@ -72,7 +72,7 @@ public class ChiTietMonDialog {
 
     private static void dong(StringBuilder sb, String nhan, String giaTri) {
         sb.append("<tr><td style='color:#666;'>").append(nhan)
-          .append("</td><td>").append(giaTri).append("</td></tr>");
+                .append("</td><td>").append(giaTri).append("</td></tr>");
     }
 
     private static String dsSize() {

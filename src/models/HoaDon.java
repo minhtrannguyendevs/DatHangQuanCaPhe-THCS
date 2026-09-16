@@ -10,7 +10,7 @@ import utils.TienTe;
  * Một đơn hàng hoàn chỉnh.
  *
  * Định dạng lưu file (mỗi hóa đơn một dòng):
- *   maHD|thoiGian|nhanVien|loaiPhucVu|soBan|tongTien|chiTiet#chiTiet#chiTiet
+ * maHD|thoiGian|nhanVien|loaiPhucVu|soBan|tongTien|chiTiet#chiTiet#chiTiet
  *
  * tongTien được ghi ra file dù có thể tính lại, để sau này lỡ đổi giá menu
  * thì hóa đơn cũ vẫn giữ đúng số tiền đã thu.
