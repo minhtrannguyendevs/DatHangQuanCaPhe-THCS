@@ -1,7 +1,17 @@
 {
     "code-runner.executorMap": {
-        "java": "cd $dir && javac -encoding UTF-8 $fileName && java -Dfile.encoding=UTF-8 $fileNameWithoutExt",
-        "java.project.outputPath": "bin",
-        "java.project.sourcePaths": ["src"]
+        "java": "cd $workspaceRoot && javac -encoding UTF-8 -d bin src/**/*.java && java -Dfile.encoding=UTF-8 -cp bin Main"
+    },
+    "java.project.outputPath": "bin",
+    "java.project.sourcePaths": ["src"],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.vscode": true,
+        "**/nbproject": true,
+        "**/build": true,
+        "**/bin": true,
+        "**/*.form": true,
+        "**/build.xml": true,
+        "**/manifest.mf": true
     }
 }
