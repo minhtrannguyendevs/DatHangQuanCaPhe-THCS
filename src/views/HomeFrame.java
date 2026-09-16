@@ -73,14 +73,20 @@ public class HomeFrame extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
+
                 },
                 new String[] {
                         "Mã món", "Tên món", "Đơn giá (VNĐ)", "Loại"
-                }));
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Xem chi tiết món");
