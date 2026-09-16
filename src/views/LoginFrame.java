@@ -2,10 +2,10 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
-// import models.Account;
-// import utils.FileIO;
+import models.Account;
+import utils.FileIO;
+
 public class LoginFrame extends JFrame {
 
     private JTextField txtTenDangNhap;
@@ -84,10 +84,10 @@ public class LoginFrame extends JFrame {
             String p = new String(txtMatKhau.getPassword()).trim();
 
             // Duyệt danh sách tài khoản đọc từ file
-            for (models.Account acc : utils.FileIO.readUsers()) {
+            for (Account acc : FileIO.readUsers()) {
                 // Khớp tài khoản -> mở HomeFrame và đóng LoginFrame
                 if (acc.username.equals(u) && acc.password.equals(p)) {
-                    new HomeFrame().setVisible(true);
+                    new HomeFrame(acc).setVisible(true);
                     this.dispose();
                     return;
                 }
@@ -97,9 +97,5 @@ public class LoginFrame extends JFrame {
         });
 
         add(panelChinh);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
 }

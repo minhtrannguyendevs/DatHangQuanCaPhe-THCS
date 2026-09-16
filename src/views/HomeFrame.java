@@ -4,10 +4,13 @@
  */
 package views;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import models.Account;
 import models.Mon;
+import utils.ChuoiViet;
 import utils.FileIO;
 
 /**
@@ -16,26 +19,69 @@ import utils.FileIO;
  */
 public class HomeFrame extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger
-            .getLogger(HomeFrame.class.getName());
+    /** Tài khoản đang đăng nhập, dùng để phân quyền và ghi tên lên hóa đơn. */
+    private final Account taiKhoan;
+
+    /** Toàn bộ menu, giữ sẵn trong bộ nhớ để tìm kiếm khỏi đọc lại file mỗi lần. */
+    private List<Mon> menu = new ArrayList<>();
 
     /**
-     * Creates new form HomeFrame
+     * Danh sách đang thực sự hiển thị trên bảng. Sau khi tìm kiếm thì danh sách
+     * này ngắn hơn menu, nên phải tra theo nó thì số dòng mới khớp.
      */
-    public HomeFrame() {
+    private List<Mon> dangHienThi = new ArrayList<>();
+
+    /** Cửa sổ đặt hàng đang mở, giữ lại để bấm nút nhiều lần không mở chồng nhau. */
+    private OrderFrame orderFrame;
+
+    public HomeFrame(Account taiKhoan) {
+        this.taiKhoan = taiKhoan;
         initComponents();
+        setTitle("Quán Cà Phê - " + taiKhoan.username + " (" + taiKhoan.role + ")");
         setLocationRelativeTo(null);
         loadData(); // Đọc dữ liệu từ file qua FileIO
     }
 
     private void loadData() {
+        menu = FileIO.readMenu();
+        hienThi(menu);
+    }
+
+    /** Đổ một danh sách món lên bảng. Dùng chung cho cả lúc mở form lẫn lúc tìm kiếm. */
+    private void hienThi(List<Mon> list) {
+        dangHienThi = list;
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-
-        List<Mon> list = FileIO.readMenu();
         for (Mon m : list) {
-            model.addRow(new Object[] { m.ma, m.ten, m.gia, m.loai });
+            model.addRow(new Object[] { m.ma, m.ten, m.giaDinhDang(), m.nhom.nhan });
         }
+    }
+
+    /**
+     * Lọc menu theo ô tìm kiếm. So sánh sau khi bỏ dấu nên gõ "ca phe"
+     * vẫn ra "Cà phê", khỏi phải bật bộ gõ tiếng Việt.
+     */
+    private void timKiem() {
+        String tuKhoa = jTextField1.getText().trim();
+        if (tuKhoa.isEmpty()) {
+            hienThi(menu);
+            return;
+        }
+        List<Mon> ketQua = new ArrayList<>();
+        for (Mon m : menu) {
+            if (ChuoiViet.chua(m.ten, tuKhoa)
+                    || ChuoiViet.chua(m.ma, tuKhoa)
+                    || ChuoiViet.chua(m.nhom.nhan, tuKhoa)) {
+                ketQua.add(m);
+            }
+        }
+        hienThi(ketQua);
+    }
+
+    /** Món đang được chọn trên bảng, null nếu chưa chọn dòng nào. */
+    private Mon monDangChon() {
+        int dong = jTable1.getSelectedRow();
+        return (dong < 0 || dong >= dangHienThi.size()) ? null : dangHienThi.get(dong);
     }
 
     /**
@@ -73,17 +119,24 @@ public class HomeFrame extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
+
                 },
                 new String[] {
                         "Mã món", "Tên món", "Đơn giá (VNĐ)", "Loại"
-                }));
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Xem chi tiết món");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton3.setText("Đặt hàng");
         jButton3.addActionListener(this::jButton3ActionPerformed);
@@ -150,25 +203,24 @@ public class HomeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+        timKiem(); // nhan Enter cung tim, khong bat buoc phai bam nut OK
     }// GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-        String tuKhoa = jTextField1.getText().trim().toLowerCase();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
-        List<Mon> list = FileIO.readMenu();
-
-        for (Mon m : list) {
-            if (tuKhoa.isEmpty() || m.ten.toLowerCase().contains(tuKhoa)) {
-                model.addRow(new Object[] { m.ma, m.ten, m.gia, m.loai });
-            }
-        }
+        timKiem();
     }// GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        ChiTietMonDialog.hien(this, monDangChon());
+    }// GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Mo man hinh dat hang. Giu lai mot cua so duy nhat de khong mo chong nhau.
+        if (orderFrame == null || !orderFrame.isDisplayable()) {
+            orderFrame = new OrderFrame(taiKhoan);
+        }
+        orderFrame.setVisible(true);
+        orderFrame.toFront();
     }// GEN-LAST:event_jButton3ActionPerformed
 
     /**

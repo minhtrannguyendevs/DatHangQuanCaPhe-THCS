@@ -1,11 +1,12 @@
-CF03;Bac siu;32000;Do uong
-CF04;Espresso;30000;Do uong
-TR02;Tra sua tran chau;35000;Do uong
-TR03;Tra vai hat chia;35000;Do uong
-TR04;Tra chanh sa;25000;Do uong
-ST01;Sinh to bo;40000;Do uong
-ST02;Sinh to xoai;35000;Do uong
-BA02;Banh mi que;20000;Do an
-BA03;Croissant bo;28000;Do an
-AN01;Huong duong;15000;Do an
-
+CF01;Cà phê đen;25000;Do uong;CAPHE
+CF02;Cà phê sữa;30000;Do uong;CAPHE
+CF03;Bạc sỉu;32000;Do uong;CAPHE
+CF04;Espresso;30000;Do uong;CAPHE
+TR02;Trà sữa trân châu;35000;Do uong;TRASUA
+TR03;Trà vải hạt chia;35000;Do uong;TRA
+TR04;Trà chanh sả;25000;Do uong;TRA
+ST01;Sinh tố bơ;40000;Do uong;SINHTO
+ST02;Sinh tố xoài;35000;Do uong;SINHTO
+BA02;Bánh mì que;20000;Do an;BANH
+BA03;Croissant bơ;28000;Do an;BANH
+AN01;Hướng dương;15000;Do an;ANVAT

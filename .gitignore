@@ -1,1 +1,9 @@
+# Thu muc build
 /build/
+/dist/
+
+# File bien dich Java
+*.class
+
+# Cau hinh rieng cua may, khong chia se trong nhom
+/nbproject/private/
