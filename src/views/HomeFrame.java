@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import models.Account;
 import models.Mon;
+import utils.ChuoiViet;
 import utils.FileIO;
 
 /**
@@ -17,9 +18,6 @@ import utils.FileIO;
  * @author MinhTranNguyen
  */
 public class HomeFrame extends javax.swing.JFrame {
-
-    private static final java.util.logging.Logger logger = java.util.logging.Logger
-            .getLogger(HomeFrame.class.getName());
 
     /** Tài khoản đang đăng nhập, dùng để phân quyền và ghi tên lên hóa đơn. */
     private final Account taiKhoan;
@@ -54,6 +52,27 @@ public class HomeFrame extends javax.swing.JFrame {
         for (Mon m : list) {
             model.addRow(new Object[] { m.ma, m.ten, m.giaDinhDang(), m.nhom.nhan });
         }
+    }
+
+    /**
+     * Lọc menu theo ô tìm kiếm. So sánh sau khi bỏ dấu nên gõ "ca phe"
+     * vẫn ra "Cà phê", khỏi phải bật bộ gõ tiếng Việt.
+     */
+    private void timKiem() {
+        String tuKhoa = jTextField1.getText().trim();
+        if (tuKhoa.isEmpty()) {
+            hienThi(menu);
+            return;
+        }
+        List<Mon> ketQua = new ArrayList<>();
+        for (Mon m : menu) {
+            if (ChuoiViet.chua(m.ten, tuKhoa)
+                    || ChuoiViet.chua(m.ma, tuKhoa)
+                    || ChuoiViet.chua(m.nhom.nhan, tuKhoa)) {
+                ketQua.add(m);
+            }
+        }
+        hienThi(ketQua);
     }
 
     /** Món đang được chọn trên bảng, null nếu chưa chọn dòng nào. */
@@ -180,20 +199,11 @@ public class HomeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+        timKiem(); // nhan Enter cung tim, khong bat buoc phai bam nut OK
     }// GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-        String tuKhoa = jTextField1.getText().trim().toLowerCase();
-        List<Mon> ketQua = new ArrayList<>();
-        for (Mon m : menu) {
-            if (tuKhoa.isEmpty()
-                    || m.ten.toLowerCase().contains(tuKhoa)
-                    || m.ma.toLowerCase().contains(tuKhoa)) {
-                ketQua.add(m);
-            }
-        }
-        hienThi(ketQua);
+        timKiem();
     }// GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
