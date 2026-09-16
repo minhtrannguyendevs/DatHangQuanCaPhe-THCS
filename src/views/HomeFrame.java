@@ -31,6 +31,9 @@ public class HomeFrame extends javax.swing.JFrame {
      */
     private List<Mon> dangHienThi = new ArrayList<>();
 
+    /** Cửa sổ đặt hàng đang mở, giữ lại để bấm nút nhiều lần không mở chồng nhau. */
+    private OrderFrame orderFrame;
+
     public HomeFrame(Account taiKhoan) {
         this.taiKhoan = taiKhoan;
         initComponents();
@@ -133,6 +136,7 @@ public class HomeFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Xem chi tiết món");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton3.setText("Đặt hàng");
         jButton3.addActionListener(this::jButton3ActionPerformed);
@@ -206,8 +210,17 @@ public class HomeFrame extends javax.swing.JFrame {
         timKiem();
     }// GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        ChiTietMonDialog.hien(this, monDangChon());
+    }// GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Mo man hinh dat hang. Giu lai mot cua so duy nhat de khong mo chong nhau.
+        if (orderFrame == null || !orderFrame.isDisplayable()) {
+            orderFrame = new OrderFrame(taiKhoan);
+        }
+        orderFrame.setVisible(true);
+        orderFrame.toFront();
     }// GEN-LAST:event_jButton3ActionPerformed
 
     /**
