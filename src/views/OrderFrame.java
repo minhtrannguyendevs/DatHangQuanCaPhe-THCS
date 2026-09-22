@@ -310,19 +310,34 @@ public class OrderFrame extends JFrame {
         spSoBan.setEnabled(taiQuan);
     }
 
-    // ----- Thanh toán (hoàn thiện ở giai đoạn 4) -----
+    // ----- Thanh toán -----
 
-    private void thanhToan() {
-        if (gioHang.rong()) {
+       private void thanhToan() {
+        // Không thanh toán khi giỏ trống
+        if (gioHang.rong()) return;
+    
+        // Lưu thông tin phục vụ
+        gioHang.loaiPhucVu = (LoaiPhucVu) cbPhucVu.getSelectedItem();
+        gioHang.soBan = gioHang.loaiPhucVu == LoaiPhucVu.TAI_QUAN
+                ? (int) spSoBan.getValue() : 0;
+    
+        String noiNhan = gioHang.soBan == 0 ? "Mang đi" : "Bàn " + gioHang.soBan;
+        String thongBao = "Phục vụ: " + noiNhan
+                + "\nTổng tiền: " + gioHang.tongTienDinhDang()
+                + "\n\nXác nhận thanh toán?";
+    
+        if (JOptionPane.showConfirmDialog(this, thongBao, "Thanh toán",
+                JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+    
+        // Ghi đơn hàng vào orders.txt
+        if (!FileIO.writeOrder(gioHang)) {
+            JOptionPane.showMessageDialog(this, "Không thể lưu đơn hàng!");
             return;
         }
-        gioHang.loaiPhucVu = (LoaiPhucVu) cbPhucVu.getSelectedItem();
-        gioHang.soBan = (gioHang.loaiPhucVu == LoaiPhucVu.TAI_QUAN) ? (Integer) spSoBan.getValue() : 0;
-
-        JOptionPane.showMessageDialog(this,
-                "Màn hình thanh toán sẽ làm ở giai đoạn 4."
-                        + "  Hiện tại đơn đang có " + gioHang.tongSoLuong() + " phần, "
-                        + "tổng " + gioHang.tongTienDinhDang() + ".",
-                "Chưa làm xong", JOptionPane.INFORMATION_MESSAGE);
-    }
-}
+    
+        // Tạo giỏ hàng mới
+        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+        gioHang = new HoaDon(taiKhoan.username);
+        veLaiGio();
+       }
+ }
